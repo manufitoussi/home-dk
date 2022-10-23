@@ -1,0 +1,35 @@
+.room {
+
+  min-width: 25em;
+  max-width: 50%;
+  .room-pic {
+    width: 4em;
+    height: 4em;
+    border-radius: 2em;
+
+    background-size: contain;
+    filter: grayscale(1);
+  
+    &.elina {
+      background-image: url('../img/elina.png');
+    }
+
+    &.jeanne {
+      background-image: url('../img/jeanne.png');
+    }
+
+    &.parents {
+      background-image: url('../img/parents.png');
+    }
+
+    &.salon {
+      background-image: url('../img/salon.png');
+    }
+  }
+
+  &.is-on .room-pic {
+    filter: none;
+  }
+
+
+}
