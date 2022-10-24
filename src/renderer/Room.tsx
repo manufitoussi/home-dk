@@ -1,82 +1,141 @@
+import SwipeRightAlt from '@mui/icons-material/SwipeRightAlt';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import {
-	Box,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
-	CircularProgress,
-	Stack,
-	Switch,
-	Typography
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CircularProgress,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Stack,
+  Switch,
+  Slider,
+  Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './Room.scss';
 import RoomIcon from './RoomIcon';
 
 const Room = (props: any) => {
-	const getsensorInfo = () => {
-		return props.sensorInfos && props.roomName in props.sensorInfos ? props.sensorInfos[props.roomName] : null;
-	};
+  const toggleOnOff = async () => {
+    props.controlInfo.pow = getCurrentIsOn() ? '0' : '1';
+    await props.setControlInfo(props.roomName, props.controlInfo);
+    setIsOn(getCurrentIsOn());
+  };
 
-	const getControlInfo = () => {
-		return props.controlInfos && props.roomName in props.controlInfos ? props.controlInfos[props.roomName] : null;
-	};
+  function showModal(consignName: string) {
+    setConsignName(consignName);
+    setIsModalShown(true);
+  }
 
-	const setupIsOn = () => {
-		const controlInfo: any = getControlInfo();
-		setIsOn(Boolean(controlInfo) && controlInfo.pow === '1');
-	};
+  function hideModal() {
+    setConsignName('');
+    setIsModalShown(false);
+  }
 
-	const toggleOnOff = async () => {
-		await props.toggleOnOff(props.roomName);
-		setupIsOn();
-	};
+  async function submitConsign(consignName: string) {
+    hideModal();
+    if (consignName === 'temp') {
+      props.controlInfo.stemp = `${temperatureConsign}`;
+    }
 
-	const [ isOn, setIsOn ] = useState(false);
+    await props.setControlInfo(props.roomName, props.controlInfo);
+  }
 
-	useEffect(() => {
-		setupIsOn();
-	});
+  function getTemperature() {
+    return props.sensorInfo.htemp;
+  }
 
-	if (getsensorInfo()) {
-		return (
-			<Card className={`room flex ${isOn ? 'is-on' : 'is-off'}`}>
-				<CardHeader
-					title={
-						<Stack direction="row" sx={{ width: '100%' }} alignItems="center">
-							<RoomIcon />
-							<Typography>{props.title}</Typography>
-						</Stack>
-					}
-				/>
-				<CardContent>
-					<Stack direction="row" alignItems="center">
-						<Typography
-							component="div"
-							variant="h5"
-							sx={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', flex: 1 }}
-						>
-							<ThermostatIcon sx={{ fontSize: '2em' }} /> {getsensorInfo().htemp}°C
-						</Typography>
-						<div className={`room-pic ${props.roomName}`} />
-					</Stack>
-				</CardContent>
-				<CardActions>
-					<Stack direction="row" alignItems="center">
-						<Switch checked={isOn} onChange={toggleOnOff} /> <Typography>{isOn ? 'ON' : 'OFF'}</Typography>
-					</Stack>
-					{/* <Button>coco</Button> */}
-				</CardActions>
-			</Card>
-		);
-	} else {
-		return (
-			<Box>
-				<CircularProgress />
-			</Box>
-		);
-	}
+  function getCurrentTemperatureConsign() {
+    return props.controlInfo.stemp;
+  }
+
+  function getCurrentIsOn() {
+    return props.controlInfo.pow === '1';
+  }
+
+  const [isOn, setIsOn] = useState(getCurrentIsOn);
+  const [temperatureConsign, setTemperatureConsign] = useState(
+    getCurrentTemperatureConsign
+  );
+
+  const [consignName, setConsignName] = useState('');
+  const [isModalShown, setIsModalShown] = useState(false);
+
+  if (props.sensorInfo) {
+    return (
+      <Card className={`room flex ${isOn ? 'is-on' : 'is-off'}`}>
+        <CardHeader
+          title={
+            <Stack direction="row" sx={{ width: '100%' }} alignItems="center">
+              <RoomIcon />
+              <Typography>{props.title}</Typography>
+            </Stack>
+          }
+        />
+        <CardContent>
+          <Stack direction="row" alignItems="center">
+            <Typography
+              component="div"
+              variant="h5"
+              sx={{
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                flex: 1,
+              }}
+            >
+              <ThermostatIcon sx={{ fontSize: '2em' }} /> {getTemperature()}°C
+            </Typography>
+            <div className={`room-pic ${props.roomName}`} />
+            <Dialog open={isModalShown}>
+              {consignName === 'temp' && (
+                <DialogTitle>
+                  {props.title} <SwipeRightAlt /> {temperatureConsign}°C{' '}
+                </DialogTitle>
+              )}
+
+              <DialogContent  sx={{width: '40vw'}}>
+                <Slider
+                  marks
+                  step={0.5}
+                  value={temperatureConsign}
+                  min={15}
+                  max={30}
+                  onChange={(event, newValue) =>
+                    setTemperatureConsign(newValue as number)
+                  }
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={hideModal}>Annuler</Button>
+                <Button onClick={() => submitConsign(consignName)}>OK</Button>
+              </DialogActions>
+            </Dialog>
+          </Stack>
+        </CardContent>
+        <CardActions>
+          <Stack direction="row" alignItems="center">
+            <Switch checked={isOn} onChange={toggleOnOff} />{' '}
+            <Typography>{isOn ? 'ON' : 'OFF'}</Typography>
+          </Stack>
+          <Button onClick={() => showModal('temp')}>
+            <SwipeRightAlt /> {getCurrentTemperatureConsign()}°C
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
+  return (
+    <Box>
+      <CircularProgress />
+    </Box>
+  );
 };
 
 export default Room;
