@@ -1,122 +1,130 @@
-const DELAY = 3; // s
+const DELAY = 5;
 
 class DaikinService {
-	_timeout: any = null;
+  _timeout: any = null;
 
   _isStart = false;
 
-	error: any = null;
+  error: any = null;
 
-	_isLoading = false;
-	get isLoading() {
-		return this._isLoading;
-	}
+  _isLoading = false;
 
-	set isLoading(value) {
-		this._isLoading = value;
-		this.onIsLoadingChange(value);
-	}
+  get isLoading() {
+    return this._isLoading;
+  }
 
-	_daikin = window.electron.daikin;
-	get daikin() {
-		return this._daikin;
-	}
+  set isLoading(value) {
+    this._isLoading = value;
+    this.onIsLoadingChange(value);
+  }
 
-	data = {
-		basicInfos: null,
-		sensorInfos: null,
-		controlInfos: null
-	};
+  _daikin = window.electron.daikin;
 
-	onBasicInfos: (infos: any) => void;
-	onSensorInfos: (infos: any) => void;
-	onControlInfos: (infos: any) => void;
-	onIsLoadingChange: (isLoading:boolean) => void;
+  get daikin() {
+    return this._daikin;
+  }
 
-	constructor(
-		onBasicInfos: (infos: any) => void = () => {},
-		onSensorInfos: (infos: any) => void = () => {},
-		onControlInfos: (infos: any) => void = () => {},
-		onIsLoadingChange: (isLoading:boolean) => void = () => {},
-	) {
+  data = {
+    basicInfos: null,
+    sensorInfos: null,
+    controlInfos: null,
+  };
+
+  onBasicInfos: (infos: any) => void;
+
+  onSensorInfos: (infos: any) => void;
+
+  onControlInfos: (infos: any) => void;
+
+  onIsLoadingChange: (isLoading: boolean) => void;
+
+  constructor(
+    onBasicInfos: (infos: any) => void = () => {},
+    onSensorInfos: (infos: any) => void = () => {},
+    onControlInfos: (infos: any) => void = () => {},
+    onIsLoadingChange: (isLoading: boolean) => void = () => {}
+  ) {
     console.debug('create a DaikinService');
-		this.onBasicInfos = onBasicInfos;
-		this.onSensorInfos = onSensorInfos;
-		this.onControlInfos = onControlInfos;
-		this.onIsLoadingChange = onIsLoadingChange;
-	}
+    this.onBasicInfos = onBasicInfos;
+    this.onSensorInfos = onSensorInfos;
+    this.onControlInfos = onControlInfos;
+    this.onIsLoadingChange = onIsLoadingChange;
+  }
 
-	async startSynchro() {
-		console.debug('startSynchro');
-		this.stopSynchro();
+  async startSynchro() {
+    console.debug('startSynchro');
+    this._clearTimout();
     this._isStart = true;
-		return await this.synchro();
-	}
+    return this.synchro();
+  }
 
-	stopSynchro() {
-    if(this._isStart) return;
+  stopSynchro() {
     this._isStart = false;
-		if (this._timeout) {
-			console.debug('stopSynchro');
-			clearTimeout(this._timeout);
-			this._timeout = null;
-		}
-	}
+    console.debug('stopSynchro');
+    this._clearTimout();
+  }
 
-	async synchro() {
-    if(!this._isStart) return;
-		await this.update();
-		this.stopSynchro();
-		this._timeout = setTimeout(() => this.synchro(), DELAY * 1000);
-		return this.data;
-	}
+  _clearTimout() {
+    if (this._timeout) {
+      clearTimeout(this._timeout);
+      this._timeout = null;
+    }
+  }
 
-	async update() {
-		this.isLoading = true;
-		try {
-			await this.getAll();
-		} catch (e) {
-			this.error = e;
-		} finally {
-			this.isLoading = false;
-		}
+  async synchro() {
+		this._clearTimout();
+    if (!this._isStart) return;
+    await this.update();
+    this._timeout = setTimeout(() => this.synchro(), DELAY * 1000);
+    return this.data;
+  }
 
-		return this.data;
-	}
+  async update() {
+    this.isLoading = true;
+    try {
+      await this.getAll();
+    } catch (e) {
+      this.error = e;
+    } finally {
+      this.isLoading = false;
+    }
 
-	async getAll() {
-		console.debug('getAll');
-		await this._getBasicInfos();
-		await this._getSensorInfos();
-		await this._getControlInfos();
-	}
+    return this.data;
+  }
 
-	async _getBasicInfos() {
-		this.data.basicInfos = await this.daikin.getBasicInfo();
-		this.onBasicInfos(this.data.basicInfos);
-		return this.data.basicInfos;
-	}
+  async getAll() {
+    console.debug('getAll');
+    await this._getBasicInfos();
+    await this._getSensorInfos();
+    await this._getControlInfos();
+  }
 
-	async _getSensorInfos() {
-		this.data.sensorInfos = await this.daikin.getSensorInfo();
-		this.onSensorInfos(this.data.sensorInfos);
-		return this.data.sensorInfos;
-	}
+  async _getBasicInfos() {
+    this.data.basicInfos = await this.daikin.getBasicInfo();
+    this.onBasicInfos(this.data.basicInfos);
+    return this.data.basicInfos;
+  }
 
-	async _getControlInfos() {
-		this.data.controlInfos = await this.daikin.getControlInfo();
-		this.onControlInfos(this.data.controlInfos);
-		console.log(this.data.controlInfos);
-		return this.data.controlInfos;
-	}
+  async _getSensorInfos() {
+    this.data.sensorInfos = await this.daikin.getSensorInfo();
+    this.onSensorInfos(this.data.sensorInfos);
+    return this.data.sensorInfos;
+  }
 
-	async controlInfoToSet(info:any) {
-		return await this.daikin.controlInfoToSet(info);
-	}
+  async _getControlInfos() {
+    this.data.controlInfos = await this.daikin.getControlInfo();
+    this.onControlInfos(this.data.controlInfos);
+    console.log(this.data.controlInfos);
+    return this.data.controlInfos;
+  }
 
-	async setControlInfo(name:string, controls:any) {
-		return await this.daikin.setControlInfo(name, controls);
-	}
+  async controlInfoToSet(info: any) {
+    return await this.daikin.controlInfoToSet(info);
+  }
+
+  async setControlInfo(name: string, controls: any) {
+    return await this.daikin.setControlInfo(name, controls);
+  }
 }
 
 export default DaikinService;
