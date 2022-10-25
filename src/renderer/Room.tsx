@@ -84,7 +84,7 @@ const Room = (props: any) => {
   if (props.sensorInfo) {
     return (
       <Card className={`room flex ${isOn ? 'is-on' : 'is-off'}`}>
-        <CardHeader
+        <CardHeader className="room-header" 
           title={
             <Stack direction="row" sx={{ width: '100%' }} alignItems="center">
               <RoomIcon />
@@ -140,7 +140,7 @@ const Room = (props: any) => {
             <Switch checked={isOn} onChange={toggleOnOff} />{' '}
             <Typography>{isOn ? 'ON' : 'OFF'}</Typography>
           </Stack>
-          <Button onClick={() => showModal('temp')}>
+          <Button onClick={() => showModal('temp')} className="command">
             <SwipeRightAlt /> {getCurrentTemperatureConsign()}°C
           </Button>
         </CardActions>

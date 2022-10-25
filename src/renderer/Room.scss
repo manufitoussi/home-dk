@@ -3,13 +3,29 @@
   min-width: 25em;
   max-width: 45%;
   margin: 1em;
+
+  background-color: #FFFFFFAA !important;
+
+  &.is-on .room-header {
+    background-color: #fd611d !important;
+    color: white;
+  } 
+  
+  &.is-off .room-header {
+    background-color: #777777ee !important;
+    color: white;
+  }
+
+  &.is-off .command {
+    opacity: 0.7;
+  }
   
   .room-pic {
-    width: 4em;
-    height: 4em;
-    border-radius: 2em;
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
 
-    background-size: contain;
+    background-size: cover;
     filter: grayscale(1);
   
     &.elina {
