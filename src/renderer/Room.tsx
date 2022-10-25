@@ -2,38 +2,25 @@ import AirIcon from '@mui/icons-material/Air';
 import SwipeRightAlt from '@mui/icons-material/SwipeRightAlt';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import {
-	Box,
-	Button,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
-	CircularProgress,
-	Dialog, DialogActions, DialogContent, DialogTitle, Slider, Stack,
-	Switch, Typography
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  Stack,
+  Switch,
+  Typography,
 } from '@mui/material';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useState } from 'react';
 import Air from './Air';
+import AirConsignContent from './AirConsignContent';
 import './Room.scss';
 import RoomIcon from './RoomIcon';
-
-
-
-const marks = [
-  { value: 15, label: '15°C' },
-  { value: 16 },
-  { value: 17 },
-  { value: 18 },
-  { value: 19 },
-  { value: 20, label: '20°C' },
-  { value: 21 },
-  { value: 22 },
-  { value: 23 },
-  { value: 24 },
-  { value: 25, label: '25°C' },
-];
+import TemperatureConsignContent from './TemperatureConsignContent';
 
 const Room = (props: any) => {
   const toggleOnOff = async () => {
@@ -119,53 +106,21 @@ const Room = (props: any) => {
             <div className={`room-pic ${props.roomName}`} />
             <Dialog open={isModalShown}>
               {consignName === 'temp' && (
-                <DialogTitle>
-                  <Stack direction="row" alignItems="center">
-                    {props.title} <SwipeRightAlt /> {temperatureConsign}°C
-                  </Stack>
-                </DialogTitle>
+                <TemperatureConsignContent
+                  title={props.title}
+                  temperatureConsign={temperatureConsign}
+                  setTemperatureConsign={setTemperatureConsign}
+                />
               )}
+
               {consignName === 'air' && (
-                <DialogTitle>
-                  <Stack direction="row" alignItems="center">
-                    {props.title} <AirIcon />
-                  </Stack>
-                </DialogTitle>
+                <AirConsignContent
+                  title={props.title}
+                  rateConsign={rateConsign}
+                  setRateConsign={setRateConsign}
+                />
               )}
 
-              <DialogContent sx={{ width: '40vw', overflow: 'visible' }}>
-                {consignName === 'temp' && (
-                  <Slider
-                    marks={marks}
-                    valueLabelDisplay="auto"
-                    step={0.5}
-                    value={temperatureConsign}
-                    min={15}
-                    max={25}
-                    sx={{ color: '#fd611d' }}
-                    onChange={(event, newValue) =>
-                      setTemperatureConsign(newValue as number)
-                    }
-                  />
-                )}
-
-                {consignName === 'air' && (
-                  <ToggleButtonGroup
-                    exclusive
-                    color="primary"
-                    sx={{ textAlign: 'center' }}
-
-                    value={rateConsign}
-                    onChange={(event, newValue) => setRateConsign(newValue)}
-                  >
-                    {Object.entries(Air.Rates).map(([key, value]) => (
-                      <ToggleButton key={key} value={value} sx={{minWidth: '3em', color: rateConsign === value ? '#fd611d !important' : 'currentColor  !important' }}>
-                        <Air f_rate={value} />
-                      </ToggleButton>
-                    ))}
-                  </ToggleButtonGroup>
-                )}
-              </DialogContent>
               <DialogActions>
                 <Button onClick={hideModal}>Annuler</Button>
                 <Button onClick={() => submitConsign(consignName)}>OK</Button>
