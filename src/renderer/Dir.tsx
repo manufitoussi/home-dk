@@ -29,6 +29,24 @@ enum Dirs {
   All = '3',
 }
 
+enum DirTexts {
+  None = 'Immobile',
+  Vertical = 'Mouvements verticaux',
+  Horizontal = 'Mouvements horizontaux',
+  All = 'Mouvements dans les deux directions',
+}
+
+interface EnumType {
+  [key: string]: string;
+}
+
 Dir.Dirs = Dirs;
+Dir.DirTexts = DirTexts;
+
+Dir.getDirText = (dir: string) => (DirTexts as EnumType)[dir];
+Dir.getValueText = (value: string) => {
+  const [dir] = Object.entries(Dirs).find(([, v]) => v === value) as [string, string];
+  return Dir.getDirText(dir);
+};
 
 export default Dir;

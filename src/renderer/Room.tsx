@@ -3,18 +3,19 @@ import ControlCameraIcon from '@mui/icons-material/ControlCamera';
 import SwipeRightAlt from '@mui/icons-material/SwipeRightAlt';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import {
-	Box,
-	Button,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
-	CircularProgress,
-	Dialog,
-	DialogActions,
-	Stack,
-	Switch,
-	Typography
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  Stack,
+  Switch,
+  Tooltip,
+  Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import Air from './Air';
@@ -52,7 +53,7 @@ const Room = (props: any) => {
       props.controlInfo.f_rate = `${rateConsign}`;
     }
 
-		if (consignName === 'dir') {
+    if (consignName === 'dir') {
       props.controlInfo.f_dir = `${dirConsign}`;
     }
 
@@ -156,12 +157,16 @@ const Room = (props: any) => {
           <Button onClick={() => showModal('temp')} className="command">
             <SwipeRightAlt /> {getCurrentTemperatureConsign()}°C
           </Button>
-          <Button onClick={() => showModal('air')} className="command">
-            <AirIcon /> <Air f_rate={getCurrentRateConsign()} />
-          </Button>
-          <Button onClick={() => showModal('dir')} className="command">
-            <ControlCameraIcon /> <Dir f_dir={getCurrentDirConsign()} />
-          </Button>
+          <Tooltip title={Air.getValueText(getCurrentRateConsign())}>
+            <Button onClick={() => showModal('air')} className="command">
+              <AirIcon /> <Air f_rate={getCurrentRateConsign()} />
+            </Button>
+          </Tooltip>
+          <Tooltip title={Dir.getValueText(getCurrentDirConsign())}>
+            <Button onClick={() => showModal('dir')} className="command">
+              <ControlCameraIcon /> <Dir f_dir={getCurrentDirConsign()} />
+            </Button>
+          </Tooltip>
         </CardActions>
       </Card>
     );

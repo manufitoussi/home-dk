@@ -47,6 +47,26 @@ enum Rates {
   V5 = '7',
 }
 
+enum RateTexts {
+  A = 'Automatique',
+  B = 'Silencieux',
+  V1 = 'Vitesse 1',
+  V2 = 'Vitesse 2',
+  V3 = 'Vitesse 3',
+  V4 = 'Vitesse 4',
+  V5 = 'Vitesse 5',
+}
+
+interface EnumType {
+  [key: string]: string;
+}
+
 Air.Rates = Rates;
+Air.RateTexts = RateTexts;
+Air.getRateText = (rate:string) => (RateTexts as EnumType)[rate]; 
+Air.getValueText = (value: string) => {
+  const [rate] = Object.entries(Rates).find(([, v]) => v === value) as [string, string];
+  return Air.getRateText(rate);
+};
 
 export default Air;
