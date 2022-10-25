@@ -21,6 +21,20 @@ import { useState } from 'react';
 import './Room.scss';
 import RoomIcon from './RoomIcon';
 
+const marks = [
+  { value: 15, label: '15°C' },
+  { value: 16 },
+  { value: 17 },
+  { value: 18 },
+  { value: 19 },
+  { value: 20, label: '20°C' },
+  { value: 21 },
+  { value: 22 },
+  { value: 23 },
+  { value: 24 },
+  { value: 25, label: '25°C' },
+];
+
 const Room = (props: any) => {
   const toggleOnOff = async () => {
     props.controlInfo.pow = getCurrentIsOn() ? '0' : '1';
@@ -100,13 +114,15 @@ const Room = (props: any) => {
                 </DialogTitle>
               )}
 
-              <DialogContent  sx={{width: '40vw'}}>
+              <DialogContent sx={{ width: '40vw', overflow: 'visible' }}>
                 <Slider
-                  marks
+                  marks={marks}
+                  valueLabelDisplay="auto"
                   step={0.5}
                   value={temperatureConsign}
                   min={15}
-                  max={30}
+                  max={25}
+									sx={{color: '#fd611d'}}
                   onChange={(event, newValue) =>
                     setTemperatureConsign(newValue as number)
                   }
