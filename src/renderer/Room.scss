@@ -17,7 +17,13 @@
   }
 
   &.is-off .command {
-    opacity: 0.7;
+    opacity: 0.5;
+    color: currentColor;
+  }
+
+  &.is-on .command {
+    opacity: 1;
+    color: currentColor;
   }
   
   .room-pic {

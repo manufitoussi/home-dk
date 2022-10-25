@@ -1,0 +1,12 @@
+
+.air-rectangle {
+  display: inline-block;
+  width: 0.3em;
+  vertical-align: -0.1em;
+
+  &+.air-rectangle {
+    margin-left:0.1em;
+  }
+}
+
+
