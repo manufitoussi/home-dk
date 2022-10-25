@@ -1,23 +1,26 @@
 import AirIcon from '@mui/icons-material/Air';
+import ControlCameraIcon from '@mui/icons-material/ControlCamera';
 import SwipeRightAlt from '@mui/icons-material/SwipeRightAlt';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  Stack,
-  Switch,
-  Typography,
+	Box,
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	CardHeader,
+	CircularProgress,
+	Dialog,
+	DialogActions,
+	Stack,
+	Switch,
+	Typography
 } from '@mui/material';
 import { useState } from 'react';
 import Air from './Air';
 import AirConsignContent from './AirConsignContent';
+import Dir from './Dir';
+import DirConsignContent from './DirConsignContent';
 import './Room.scss';
 import RoomIcon from './RoomIcon';
 import TemperatureConsignContent from './TemperatureConsignContent';
@@ -49,6 +52,10 @@ const Room = (props: any) => {
       props.controlInfo.f_rate = `${rateConsign}`;
     }
 
+		if (consignName === 'dir') {
+      props.controlInfo.f_dir = `${dirConsign}`;
+    }
+
     await props.setControlInfo(props.roomName, props.controlInfo);
   }
 
@@ -64,6 +71,10 @@ const Room = (props: any) => {
     return props.controlInfo.f_rate;
   }
 
+  function getCurrentDirConsign() {
+    return props.controlInfo.f_dir;
+  }
+
   function getCurrentIsOn() {
     return props.controlInfo.pow === '1';
   }
@@ -73,6 +84,7 @@ const Room = (props: any) => {
     getCurrentTemperatureConsign
   );
   const [rateConsign, setRateConsign] = useState(getCurrentRateConsign);
+  const [dirConsign, setDirConsign] = useState(getCurrentDirConsign);
 
   const [consignName, setConsignName] = useState('');
   const [isModalShown, setIsModalShown] = useState(false);
@@ -108,16 +120,24 @@ const Room = (props: any) => {
               {consignName === 'temp' && (
                 <TemperatureConsignContent
                   title={props.title}
-                  temperatureConsign={temperatureConsign}
-                  setTemperatureConsign={setTemperatureConsign}
+                  consign={temperatureConsign}
+                  setConsign={setTemperatureConsign}
                 />
               )}
 
               {consignName === 'air' && (
                 <AirConsignContent
                   title={props.title}
-                  rateConsign={rateConsign}
-                  setRateConsign={setRateConsign}
+                  consign={rateConsign}
+                  setConsign={setRateConsign}
+                />
+              )}
+
+              {consignName === 'dir' && (
+                <DirConsignContent
+                  title={props.title}
+                  consign={dirConsign}
+                  setConsign={setDirConsign}
                 />
               )}
 
@@ -138,6 +158,9 @@ const Room = (props: any) => {
           </Button>
           <Button onClick={() => showModal('air')} className="command">
             <AirIcon /> <Air f_rate={getCurrentRateConsign()} />
+          </Button>
+          <Button onClick={() => showModal('dir')} className="command">
+            <ControlCameraIcon /> <Dir f_dir={getCurrentDirConsign()} />
           </Button>
         </CardActions>
       </Card>

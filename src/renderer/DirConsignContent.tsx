@@ -1,15 +1,15 @@
+import ControlCameraIcon from '@mui/icons-material/ControlCamera';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import AirIcon from '@mui/icons-material/Air';
-import Air from './Air';
 import ConsignDialogContent from './ConsignDialogContent';
+import Dir from './Dir';
 
-const AirConsignContent = (props: any) => {
+const DirConsignContent = (props: any) => {
   return (
     <ConsignDialogContent
       titleContent={
         <>
-          {props.title} <AirIcon />
+          {props.title} <ControlCameraIcon />
         </>
       }
       dialogContent={
@@ -20,7 +20,7 @@ const AirConsignContent = (props: any) => {
           value={props.consign}
           onChange={(event, newValue) => props.setConsign(newValue)}
         >
-          {Object.entries(Air.Rates).map(([key, value]) => (
+          {Object.entries(Dir.Dirs).map(([key, value]) => (
             <ToggleButton
               key={key}
               value={value}
@@ -32,7 +32,7 @@ const AirConsignContent = (props: any) => {
                     : 'currentColor  !important',
               }}
             >
-              <Air f_rate={value} />
+              <Dir f_dir={value} />
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
@@ -41,4 +41,4 @@ const AirConsignContent = (props: any) => {
   );
 };
 
-export default AirConsignContent;
+export default DirConsignContent;

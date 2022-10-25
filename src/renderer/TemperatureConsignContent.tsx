@@ -21,7 +21,7 @@ const TemperatureConsignContent = (props: any) => {
     <ConsignDialogContent
       titleContent={
         <>
-          {props.title} <SwipeRightAlt /> {props.temperatureConsign}°C
+          {props.title} <SwipeRightAlt /> {props.consign}°C
         </>
       }
       dialogContent={
@@ -29,12 +29,12 @@ const TemperatureConsignContent = (props: any) => {
           marks={marks}
           valueLabelDisplay="auto"
           step={0.5}
-          value={props.temperatureConsign}
+          value={props.consign}
           min={15}
           max={25}
           sx={{ color: '#fd611d' }}
           onChange={(event, newValue) =>
-            props.setTemperatureConsign(newValue as number)
+            props.setConsign(newValue as number)
           }
         />
       }
