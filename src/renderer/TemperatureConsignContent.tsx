@@ -14,10 +14,36 @@ const marks = [
   { value: 23 },
   { value: 24 },
   { value: 25, label: '25°C' },
+  { value: 26 },
+  { value: 27 },
+  { value: 28 },
+  { value: 29 },
+  { value: 30, label: '30°C' },
 ];
 
+const range = {
+  heater: {
+    min: 15,
+    max: 30,
+  },
+  cooler: {
+    min: 18,
+    max: 30,
+  },
+};
+
+interface EnumType {
+  [key: string]: any;
+}
+
 function formatConsign(consign: string) {
-  return Intl.NumberFormat('en', {minimumFractionDigits: 1}).format(parseFloat(consign));
+  return Intl.NumberFormat('en', { minimumFractionDigits: 1 }).format(
+    parseFloat(consign)
+  );
+}
+
+function modeToRange(mode: string) {
+  return (range as EnumType)[mode];
 }
 
 const TemperatureConsignContent = (props: any) => {
@@ -34,12 +60,10 @@ const TemperatureConsignContent = (props: any) => {
           valueLabelDisplay="auto"
           step={0.5}
           value={props.consign}
-          min={15}
-          max={25}
-          sx={{ color: '#fd611d' }}
-          onChange={(_event, newValue) =>
-            props.setConsign(newValue as number)
-          }
+          min={modeToRange(props.mode).min}
+          max={modeToRange(props.mode).max}
+          sx={{ color: props.themeColor }}
+          onChange={(_event, newValue) => props.setConsign(newValue as number)}
         />
       }
     />

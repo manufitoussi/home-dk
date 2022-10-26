@@ -26,7 +26,7 @@ class DaikinService {
 
   data = {
     basicInfos: null,
-    sensorInfos: null,
+    sensorInfos:null,
     controlInfos: null,
   };
 
@@ -36,12 +36,15 @@ class DaikinService {
 
   onControlInfos: (infos: any) => void;
 
+  onAllInfos: (data: any) => void;
+
   onIsLoadingChange: (isLoading: boolean) => void;
 
   constructor(
     onBasicInfos: (infos: any) => void = () => {},
     onSensorInfos: (infos: any) => void = () => {},
     onControlInfos: (infos: any) => void = () => {},
+    onAllInfos: (data: any) => void = () => {},
     onIsLoadingChange: (isLoading: boolean) => void = () => {}
   ) {
     // console.debug('create a DaikinService');
@@ -49,6 +52,7 @@ class DaikinService {
     this.onSensorInfos = onSensorInfos;
     this.onControlInfos = onControlInfos;
     this.onIsLoadingChange = onIsLoadingChange;
+		this.onAllInfos = onAllInfos;
   }
 
   async startSynchro() {
@@ -72,7 +76,7 @@ class DaikinService {
   }
 
   async synchro() {
-		this._clearTimout();
+    this._clearTimout();
     if (!this._isStart) return;
     await this.update();
     this._timeout = setTimeout(() => this.synchro(), DELAY * 1000);
@@ -97,6 +101,7 @@ class DaikinService {
     await this._getBasicInfos();
     await this._getSensorInfos();
     await this._getControlInfos();
+		this.onAllInfos(this.data);
   }
 
   async _getBasicInfos() {

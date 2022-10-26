@@ -32,7 +32,7 @@ const AirConsignContent = (props: any) => {
                   minWidth: '3em',
                   color:
                     props.consign === value
-                      ? '#fd611d !important'
+                      ? `${props.themeColor} !important`
                       : 'currentColor  !important',
                 }}
               >

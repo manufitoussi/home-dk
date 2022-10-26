@@ -1,37 +1,36 @@
 import AirIcon from '@mui/icons-material/Air';
 import ControlCameraIcon from '@mui/icons-material/ControlCamera';
+import HvacIcon from '@mui/icons-material/Hvac';
 import SwipeRightAlt from '@mui/icons-material/SwipeRightAlt';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  Stack,
-  Switch,
-  Tooltip,
-  Typography,
+	Box,
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	CardHeader,
+	CircularProgress,
+	Dialog,
+	DialogActions,
+	Stack,
+	Switch,
+	Tooltip,
+	Typography
 } from '@mui/material';
-import { useState } from 'react';
-import HvacIcon from '@mui/icons-material/Hvac';
+import { useState, useEffect } from 'react';
 import Air from './Air';
 import AirConsignContent from './AirConsignContent';
 import Dir from './Dir';
 import DirConsignContent from './DirConsignContent';
 import './Room.scss';
-import RoomIcon from './RoomIcon';
 import TemperatureConsignContent from './TemperatureConsignContent';
 
 const Room = (props: any) => {
   const toggleOnOff = async () => {
-    props.controlInfo.pow = getCurrentIsOn() ? '0' : '1';
+    setIsOn(!isOn);
+    props.controlInfo.pow = isOn ? '0' : '1';
     await props.setControlInfo(props.roomName, props.controlInfo);
-    setIsOn(getCurrentIsOn());
   };
 
   function showModal(consignName: string) {
@@ -95,11 +94,20 @@ const Room = (props: any) => {
   const [consignName, setConsignName] = useState('');
   const [isModalShown, setIsModalShown] = useState(false);
 
+	useEffect(() => {
+		setIsOn(getCurrentIsOn());
+		if(!isModalShown) {
+			setDirConsign(getCurrentDirConsign());
+			setTemperatureConsign(getCurrentTemperatureConsign());
+			setRateConsign(getCurrentRateConsign());
+		}
+	}, [props.controlInfo]);
+
   if (props.sensorInfo) {
     return (
       <Card className={`room flex ${isOn ? 'is-on' : 'is-off'}`}>
         <CardHeader
-          className="room-header"
+          className={'room-header ' + props.mode }
           title={
             <Stack direction="row" sx={{ width: '100%' }} alignItems="center">
               {getIcon()}
@@ -128,6 +136,8 @@ const Room = (props: any) => {
                   title={props.title}
                   consign={temperatureConsign}
                   setConsign={setTemperatureConsign}
+									mode={props.mode}
+									themeColor={props.themeColor}
                 />
               )}
 
@@ -136,6 +146,7 @@ const Room = (props: any) => {
                   title={props.title}
                   consign={rateConsign}
                   setConsign={setRateConsign}
+									themeColor={props.themeColor}
                 />
               )}
 
@@ -144,7 +155,8 @@ const Room = (props: any) => {
                   title={props.title}
                   consign={dirConsign}
                   setConsign={setDirConsign}
-                />
+									themeColor={props.themeColor}
+									/>
               )}
 
               <DialogActions>
@@ -155,7 +167,7 @@ const Room = (props: any) => {
           </Stack>
         </CardContent>
         <CardActions>
-          <Stack direction="row" alignItems="center">
+          <Stack direction="row" alignItems="center" flex={1}>
             <Switch checked={isOn} onChange={toggleOnOff} color="success" />{' '}
             <Typography>{isOn ? 'ON' : 'OFF'}</Typography>
           </Stack>

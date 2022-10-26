@@ -31,7 +31,38 @@ body.fixed {
   right: 0;
   left: 0;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.3);
+
+  background-image: none;
+
+  transition: background-color 600ms ease-in-out,
+              background-image 600ms ease-in-out;
+
+  &.heater {
+    background-image: url('../img/heater.png');
+  }
+
+  &.cooler {
+    background-image: url('../img/cooler.png');
+  }
+
+  &:not(.loading) {
+    background-color: rgba(255, 255, 255, 1);
+  }
+
+  &.loading {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  background-repeat: no-repeat;
+  background-position: 95% 95%;
+
+  .mode-selector:before,
+  .mode-selector:hover:before,
+  .mode-selector:focus:before ,
+  .mode-selector:after, 
+  .mode-selector:focus:after {
+    border: none !important;
+  }
 }
 
 /* ===== Scrollbar CSS ===== */
