@@ -5,6 +5,7 @@
   margin: 1em;
 
   background-color: #FFFFFFAA !important;
+  backdrop-filter: blur(4px);
 
   &.is-on .room-header {
     background-color: #fd611d !important;

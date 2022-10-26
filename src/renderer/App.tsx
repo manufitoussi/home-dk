@@ -130,9 +130,9 @@ const Application = () => {
         </Toolbar>
       </AppBar>
 
-      <Stack flexWrap="wrap" direction="row" sx={{ width: '100%' }}>
+      <Stack flexWrap="wrap" direction="row" sx={{ width: '100%', overflow: 'auto' }}>
         <Toolbar />
-        <Box sx={{ flex: 1, display: "flex", paddingTop: '5em', flexDirection: "row", flexWrap: 'wrap'}}>
+        <Box sx={{ flex: 1, display: "flex", paddingTop: '5em', flexDirection: "row", flexWrap: 'wrap', justifyContent: 'center', alignContent: 'start'}}>
           {salonSensorInfo && salonControlInfo && (
             <Room
               roomName="salon"
