@@ -1,12 +1,10 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "bibou-home-ac",
+  "version": "2.0.0",
+  "description": "Controle des climatiseur de l'appartement.",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Emmanuel FITOUSSI"
   },
   "main": "./dist/main/main.js",
   "scripts": {
