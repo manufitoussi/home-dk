@@ -1,9 +1,11 @@
 import KingBedIcon from '@mui/icons-material/KingBed';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import SingleBedIcon from '@mui/icons-material/SingleBed';
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import WeekendIcon from '@mui/icons-material/Weekend';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -121,11 +123,15 @@ const Application = () => {
     await changeControlInfo('elina');
     await changeControlInfo('jeanne');
 
-    await daikinService.getAll();
+    await daikinService.update();
   }
 
   function onModeChange(newMode: string) {
     changeMode(newMode as Mode);
+  }
+
+  async function refreshAll() {
+    await daikinService.update();
   }
 
   function getCurrentMode() {
@@ -189,7 +195,10 @@ const Application = () => {
 
   if (isReady) {
     return (
-      <Box className={`application ${getCurrentMode()}`} sx={{ display: 'flex' }}>
+      <Box
+        className={`application ${getCurrentMode()}`}
+        sx={{ display: 'flex' }}
+      >
         <AppBar sx={{ backgroundColor: getCurrentModeColor() }}>
           <Toolbar>
             <Stack direction="row" sx={{ width: '100%' }} alignItems="center">
@@ -218,7 +227,7 @@ const Application = () => {
               </Typography>
 
               <Typography sx={{ flex: 1 }} component="div" />
-              {isLoading && <CircularProgress sx={{ color: 'white' }} />}
+              {/* {isLoading && <CircularProgress sx={{ color: 'white' }} />} */}
               <Typography
                 component="div"
                 variant="h6"
@@ -227,11 +236,19 @@ const Application = () => {
               >
                 Extérieur <ThermostatIcon /> {tempExt}°C
               </Typography>
+              <Button
+                className={`refresh-button ${isLoading ? 'loading' : ''}`}
+                sx={{ color: 'white' }}
+                onClick={refreshAll}
+              >
+                <RefreshIcon />
+              </Button>
             </Stack>
           </Toolbar>
         </AppBar>
 
         <Stack
+          className='main-container'
           flexWrap="wrap"
           direction="row"
           sx={{ width: '100%', overflow: 'auto' }}
@@ -305,8 +322,12 @@ const Application = () => {
       className="application loading"
       sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Typography component="div" variant="h6" sx={{display: 'flex', alignItems: 'center'}}>
-        BibouHome <CircularProgress sx={{marginLeft: '1em'}} />
+      <Typography
+        component="div"
+        variant="h6"
+        sx={{ display: 'flex', alignItems: 'center' }}
+      >
+        BibouHome <CircularProgress sx={{ marginLeft: '1em' }} />
       </Typography>
     </Box>
   );
