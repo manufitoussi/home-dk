@@ -67,6 +67,10 @@ body.fixed {
   background-repeat: no-repeat;
   background-position: calc(50% - 0.25em) calc(50% + 2em);//95% 95%;
 
+  .app-bar {
+    transition: background-color 600ms ease-in-out;
+  }
+
   .main-container {
     transition: background-color 600ms ease-in-out;
     background-color: rgba(255, 255, 255, 0.6);

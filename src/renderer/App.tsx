@@ -199,7 +199,7 @@ const Application = () => {
         className={`application ${getCurrentMode()}`}
         sx={{ display: 'flex' }}
       >
-        <AppBar sx={{ backgroundColor: getCurrentModeColor() }}>
+        <AppBar sx={{ backgroundColor: getCurrentModeColor() }} className="app-bar">
           <Toolbar>
             <Stack direction="row" sx={{ width: '100%' }} alignItems="center">
               <Select
