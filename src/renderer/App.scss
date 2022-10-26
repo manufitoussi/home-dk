@@ -19,9 +19,9 @@ body.fixed {
   z-index: -1;
 
   background-image: url('../img/splashscreen.png');
-  background-size: contain;
+  background-size: 512px;
   background-repeat: no-repeat;
-  background-position: calc(50% - 0.2em) calc(50% + 3em);
+  background-position: calc(50% - 0.25em) calc(50% + 2em);
 }
 
 @keyframes fade-in-all {
