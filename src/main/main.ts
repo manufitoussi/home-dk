@@ -74,8 +74,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1000, // size.width*1/2,
-    height: 710, // size.height*2/3,
+    width: 795, // size.width*1/2,
+    height: 612, // size.height*2/3,
     title: 'Climatisation BibouHome',
     icon: getAssetPath('icon.png'),
     autoHideMenuBar: true,

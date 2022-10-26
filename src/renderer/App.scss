@@ -54,7 +54,7 @@ body.fixed {
   }
 
   background-repeat: no-repeat;
-  background-position: 95% 95%;
+  background-position: calc(50% - 0.25em) calc(50% + 2em);//95% 95%;
 
   .mode-selector:before,
   .mode-selector:hover:before,

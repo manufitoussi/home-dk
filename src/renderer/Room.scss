@@ -1,11 +1,11 @@
 .room {
 
-  min-width: 25em;
+  min-width: 23em;
   max-width: 45%;
-  margin: 1em;
+  margin: 0.5em;
 
   background-color: #FFFFFFAA !important;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(6px);
 
   &.is-on .room-header {
 

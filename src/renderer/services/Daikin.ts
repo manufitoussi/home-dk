@@ -1,4 +1,4 @@
-const DELAY = 5;
+const DELAY = 15;
 
 class DaikinService {
   _timeout: any = null;
