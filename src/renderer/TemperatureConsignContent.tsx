@@ -16,12 +16,16 @@ const marks = [
   { value: 25, label: '25°C' },
 ];
 
+function formatConsign(consign: string) {
+  return Intl.NumberFormat('en', {minimumFractionDigits: 1}).format(parseFloat(consign));
+}
+
 const TemperatureConsignContent = (props: any) => {
   return (
     <ConsignDialogContent
       titleContent={
         <>
-          {props.title} <SwipeRightAlt /> {props.consign}°C
+          {props.title} <SwipeRightAlt /> {formatConsign(props.consign)}°C
         </>
       }
       dialogContent={
