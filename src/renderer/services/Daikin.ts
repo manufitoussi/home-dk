@@ -18,7 +18,7 @@ class DaikinService {
     this.onIsLoadingChange(value);
   }
 
-  _daikin = window.electron.daikin;
+  _daikin = window.electron?.daikin;
 
   get daikin() {
     return this._daikin;
@@ -44,7 +44,7 @@ class DaikinService {
     onControlInfos: (infos: any) => void = () => {},
     onIsLoadingChange: (isLoading: boolean) => void = () => {}
   ) {
-    console.debug('create a DaikinService');
+    // console.debug('create a DaikinService');
     this.onBasicInfos = onBasicInfos;
     this.onSensorInfos = onSensorInfos;
     this.onControlInfos = onControlInfos;
@@ -52,7 +52,7 @@ class DaikinService {
   }
 
   async startSynchro() {
-    console.debug('startSynchro');
+    // console.debug('startSynchro');
     this._clearTimout();
     this._isStart = true;
     return this.synchro();
@@ -60,7 +60,7 @@ class DaikinService {
 
   stopSynchro() {
     this._isStart = false;
-    console.debug('stopSynchro');
+    // console.debug('stopSynchro');
     this._clearTimout();
   }
 
@@ -93,7 +93,7 @@ class DaikinService {
   }
 
   async getAll() {
-    console.debug('getAll');
+    // console.debug('getAll');
     await this._getBasicInfos();
     await this._getSensorInfos();
     await this._getControlInfos();
@@ -114,7 +114,7 @@ class DaikinService {
   async _getControlInfos() {
     this.data.controlInfos = await this.daikin.getControlInfo();
     this.onControlInfos(this.data.controlInfos);
-    console.log(this.data.controlInfos);
+    // console.log(this.data.controlInfos);
     return this.data.controlInfos;
   }
 

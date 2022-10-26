@@ -17,14 +17,14 @@ const parseResponse = (txt:string) => {
 };
 
 const parseBasicInfo = (txt:string) => {
-  console.log('txt:', txt);
+  // console.log('txt:', txt);
   var obj = parseResponse(txt);
   if (!obj) return null;
   if (!obj.name) return null;
   if (!obj.mac) return null;
   obj.name = decodeURI(obj.name);
   obj.mac = decodeURI(obj.mac);
-  console.log(obj);
+  // console.log(obj);
   return obj;
 };
 

@@ -37,7 +37,7 @@ const TemperatureConsignContent = (props: any) => {
           min={15}
           max={25}
           sx={{ color: '#fd611d' }}
-          onChange={(event, newValue) =>
+          onChange={(_event, newValue) =>
             props.setConsign(newValue as number)
           }
         />

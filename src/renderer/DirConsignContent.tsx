@@ -19,7 +19,7 @@ const DirConsignContent = (props: any) => {
           color="primary"
           sx={{ textAlign: 'center' }}
           value={props.consign}
-          onChange={(event, newValue) => {
+          onChange={(_event, newValue) => {
             if (newValue !== null) props.setConsign(newValue);
           }}
         >

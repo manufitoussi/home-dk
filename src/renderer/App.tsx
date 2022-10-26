@@ -15,7 +15,7 @@ import DaikinService from './services/Daikin';
 let daikinService: DaikinService;
 
 const Application = () => {
-  function onBasicInfos(infos: any) {
+  function onBasicInfos(_infos: any) {
     // setBasicInfos(infos);
   }
   function onSensorInfos(infos: any) {
@@ -84,7 +84,7 @@ const Application = () => {
 	const [elinaSensorInfo, setElinaSensorInfo] = useState(null);
   const [elinaControlInfo, setElinaControlInfo] = useState(null);
 
-  console.log('createApp');
+  // console.log('createApp');
 
   if (!daikinService) {
     daikinService = new DaikinService(
@@ -96,7 +96,7 @@ const Application = () => {
   }
 
   useEffect(() => {
-    console.debug('useEffect', daikinService);
+    // console.debug('useEffect', daikinService);
     daikinService.startSynchro();
 
     return () => {
