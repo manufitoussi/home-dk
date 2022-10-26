@@ -18,6 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import HvacIcon from '@mui/icons-material/Hvac';
 import Air from './Air';
 import AirConsignContent from './AirConsignContent';
 import Dir from './Dir';
@@ -41,6 +42,10 @@ const Room = (props: any) => {
   function hideModal() {
     setConsignName('');
     setIsModalShown(false);
+  }
+
+  function getIcon() {
+    return props.icon ?? <HvacIcon />;
   }
 
   async function submitConsign(consignName: string) {
@@ -97,7 +102,7 @@ const Room = (props: any) => {
           className="room-header"
           title={
             <Stack direction="row" sx={{ width: '100%' }} alignItems="center">
-              <RoomIcon />
+              {getIcon()}
               <Typography>{props.title}</Typography>
             </Stack>
           }
