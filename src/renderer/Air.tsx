@@ -25,10 +25,10 @@ const Air = (props: any) => {
     );
   }
 
-  if (props.f_rate === Rates.A) {
+  if (props.f_rate === Rate.A) {
     return <span style={{ color: getColor() }}>auto</span>;
   }
-  if (props.f_rate === Rates.B) {
+  if (props.f_rate === Rate.B) {
     return <NightsStayIcon sx={{ color: getColor() }} />;
   }
   return (
@@ -37,7 +37,7 @@ const Air = (props: any) => {
     </span>
   );
 };
-enum Rates {
+enum Rate {
   A = 'A',
   B = 'B',
   V1 = '3',
@@ -47,7 +47,7 @@ enum Rates {
   V5 = '7',
 }
 
-enum RateTexts {
+enum RateText {
   A = 'Automatique',
   B = 'Silencieux',
   V1 = 'Vitesse 1',
@@ -61,11 +61,11 @@ interface EnumType {
   [key: string]: string;
 }
 
-Air.Rates = Rates;
-Air.RateTexts = RateTexts;
-Air.getRateText = (rate:string) => (RateTexts as EnumType)[rate]; 
+Air.Rate = Rate;
+Air.RateText = RateText;
+Air.getRateText = (rate:string) => (RateText as EnumType)[rate]; 
 Air.getValueText = (value: string) => {
-  const [rate] = Object.entries(Rates).find(([, v]) => v === value) as [string, string];
+  const [rate] = Object.entries(Rate).find(([, v]) => v === value) as [string, string];
   return Air.getRateText(rate);
 };
 

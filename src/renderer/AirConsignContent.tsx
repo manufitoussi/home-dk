@@ -23,7 +23,7 @@ const AirConsignContent = (props: any) => {
             if (newValue !== null) props.setConsign(newValue);
           }}
         >
-          {Object.entries(Air.Rates).map(([key, value]) => (
+          {Object.entries(Air.Rate).map(([key, value]) => (
             <Tooltip title={Air.getRateText(key)}>
               <ToggleButton
                 key={key}

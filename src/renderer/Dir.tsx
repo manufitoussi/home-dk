@@ -10,26 +10,26 @@ const Dir = (props: any) => {
   }
 
   switch (getDir()) {
-    case Dirs.None:
+    case DirEnum.None:
       return <NotInterestedIcon />;
-    case Dirs.Vertical:
+    case DirEnum.Vertical:
       return <SwapVertIcon />;
-    case Dirs.Horizontal:
+    case DirEnum.Horizontal:
       return <SwapHorizIcon />;
-    case Dirs.All:
+    case DirEnum.All:
       return <ThreeDRotationIcon />;
     default:
       return <NotInterestedIcon />;
   }
 };
-enum Dirs {
+enum DirEnum {
   None = '0',
   Vertical = '1',
   Horizontal = '2',
   All = '3',
 }
 
-enum DirTexts {
+enum DirText {
   None = 'Immobile',
   Vertical = 'Mouvements verticaux',
   Horizontal = 'Mouvements horizontaux',
@@ -40,12 +40,12 @@ interface EnumType {
   [key: string]: string;
 }
 
-Dir.Dirs = Dirs;
-Dir.DirTexts = DirTexts;
+Dir.DirEnum = DirEnum;
+Dir.DirTexts = DirText;
 
-Dir.getDirText = (dir: string) => (DirTexts as EnumType)[dir];
+Dir.getDirText = (dir: string) => (DirText as EnumType)[dir];
 Dir.getValueText = (value: string) => {
-  const [dir] = Object.entries(Dirs).find(([, v]) => v === value) as [string, string];
+  const [dir] = Object.entries(DirEnum).find(([, v]) => v === value) as [string, string];
   return Dir.getDirText(dir);
 };
 

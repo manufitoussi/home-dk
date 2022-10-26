@@ -23,7 +23,7 @@ const DirConsignContent = (props: any) => {
             if (newValue !== null) props.setConsign(newValue);
           }}
         >
-          {Object.entries(Dir.Dirs).map(([key, value]) => (
+          {Object.entries(Dir.DirEnum).map(([key, value]) => (
             <Tooltip title={Dir.getDirText(key)}>
               <ToggleButton
                 key={key}
