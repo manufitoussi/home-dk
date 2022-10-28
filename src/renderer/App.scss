@@ -24,6 +24,17 @@ body.fixed {
   background-position: calc(50% - 0.25em) calc(50% + 2em);
 }
 
+#root {
+  background-color: rgba(255, 255, 255, 0.6);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  display: flex;
+}
+
 @keyframes fade-in-all {
   from {
     opacity: 0;
@@ -35,12 +46,9 @@ body.fixed {
 }
 
 .application {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+ 
   overflow: hidden;
+  flex: 1;
 
   background-image: none;
 
@@ -61,7 +69,7 @@ body.fixed {
   }
 
   &.loading {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: transparent;
   }
 
   background-repeat: no-repeat;
