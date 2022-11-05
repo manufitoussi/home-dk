@@ -31,7 +31,7 @@ enum Mode {
 }
 
 enum ModeColor {
-  heater = '#fd611d',
+  heater = '#d51e1b',
   cooler = '#1976d2',
 }
 
